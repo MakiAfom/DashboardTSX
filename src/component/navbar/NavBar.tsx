@@ -1,7 +1,16 @@
-import React from 'react';
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import TemporaryDrawer from '../sidebar/Sidebar'; // Adjust the path as necessary
+import React from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import TemporaryDrawer from "../sidebar/Sidebar"; // Adjust the path as necessary
+import { Link } from "react-router-dom";
+import Sidebar from "../sidebar/Sidebar";
 
 interface ButtonAppBarProps {
   // Define props here if needed, e.g., title
@@ -20,6 +29,8 @@ const NavBar: React.FC<ButtonAppBarProps> = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            component={Link}
+            to={"/Sidebar"}
             // onClick should call a function to handle opening the drawer
           >
             <MenuIcon />
@@ -30,7 +41,8 @@ const NavBar: React.FC<ButtonAppBarProps> = () => {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      <TemporaryDrawer /> {/* Use TemporaryDrawer here if it's part of the AppBar */}
+      <TemporaryDrawer />{" "}
+      {/* Use TemporaryDrawer here if it's part of the AppBar */}
     </Box>
   );
 };
