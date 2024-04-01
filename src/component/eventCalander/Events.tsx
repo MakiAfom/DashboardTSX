@@ -14,7 +14,11 @@ const Events: React.FC<EventsProps> = () => {
       <Link to="/Profile" className="btnmt-4">
         Read More
       </Link>
-      <Sidebar />
+      <Sidebar
+        state={undefined}
+        setState={undefined}
+        toggleDrawer={undefined}
+      />
     </div>
   ); // Dynamically render the title prop
 };

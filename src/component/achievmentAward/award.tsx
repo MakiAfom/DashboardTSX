@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // Define an interface for the component's props
 interface AwardProps {
@@ -6,7 +6,7 @@ interface AwardProps {
 }
 
 const Award: React.FC<AwardProps> = ({ name }) => {
-  return <div>{name}</div>; // Use the name prop in the component
+  return <div>{"Awards given"}</div>; // Use the name prop in the component
 };
 
 export default Award;

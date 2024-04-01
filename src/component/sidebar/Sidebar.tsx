@@ -1,51 +1,82 @@
-import React from "react";
+import * as React from "react";
+import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+// import Button from '@mui/material/Button';
 import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
 
-interface SidebarItem {
-  id: number;
-  text: string;
-  path: string;
-  icon: React.ReactNode;
-}
+type Anchor = "top" | "left" | "bottom" | "right";
 
-const sidebarItems: SidebarItem[] = [
-  { id: 1, text: "Inbox", path: "/inbox", icon: <InboxIcon /> },
-  { id: 2, text: "Mail", path: "/mail", icon: <MailIcon /> },
-  // Add more items as needed
-];
-const Sidebar: React.FC = () => {
-  return (
-    <Drawer anchor="left">
-      <Box sx={{ width: 250, paddingTop: "10px" }} role="presentation">
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ paddingLeft: "10px" }}
-        >
-          Sidebar Title
-        </Typography>
-        <List>
-          {sidebarItems.map((item: any) => (
-            <div key={item.id}>
-              <ListItem component={Link} to={item.path}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItem>
-            </div>
-          ))}
-        </List>
-      </Box>
-    </Drawer>
+export default function AnchorTemporaryDrawer({
+  state,
+  setState,
+  toggleDrawer,
+}) {
+  const list = (anchor: Anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {[
+          "award",
+          "Communication",
+          "Send email",
+          "Events",
+          "Survey",
+          "Profilemgmt",
+          "Resources",
+          "Resource",
+        ].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton href={`/${text}`}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
-};
 
-export default Sidebar;
+  return (
+    <div>
+      {(["left"] as const).map((anchor) => (
+        <React.Fragment key={anchor}>
+          {/* <Button >{anchor}</Button> */}
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
+            {list(anchor)}
+          </Drawer>
+        </React.Fragment>
+      ))}
+       
+    </div>
+  );
+}
